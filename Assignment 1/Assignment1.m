@@ -1,13 +1,13 @@
 %David Fernández Chaves & Shafeef
 
 %General initialization
-Alpha = 0.75:0.25:3.5;
+Alpha = 0.75:0.1:3.5;
 Pls = zeros(1,size(Alpha,2));
 Qls = zeros(1,size(Alpha,2));
 
 Ndimensions=20;             %Number of dimensions
 Nmax=100;                   %Number max of iteration to learnd
-nD=50;                      %Number of experiment to get the mean
+nD=300;                      %Number of experiment to get the mean
 P=round(Alpha*Ndimensions);  %Number of samples based on Alfa
 C=0.5;                      %Constant C>0
 
