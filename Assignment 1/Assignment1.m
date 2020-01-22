@@ -1,4 +1,6 @@
+%Assigment 1 - Perceptron Training
 %David Fernández Chaves & Shafeef
+%Neural Networks and Computational Intelligence
 
 %General initialization
 Alpha = 0.75:0.1:3.5;
