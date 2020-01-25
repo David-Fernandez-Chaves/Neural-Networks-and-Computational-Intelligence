@@ -1,8 +1,8 @@
-function [K] = Stability(W,Input,Label)
+function [K] = Stability(W,S,Label)
 %Stabilitie 
 %   Calculate the stability
 
-K=(W*Input*Label)/norm(x);
+K=(W*S*Label)/norm(W);
 
 
 end
