@@ -1,14 +1,11 @@
-function [W,K] = MinOver(S,Labels)
+function [W,t] = MinOver(Samples,Labels,tmax)
 %   MinOver algorithm
 
-    Bias = 0;
-    nSamples = size(S,2);
-    Ndimensions = size(S,1); 
+    NSamples = size(Samples,2);
+    NDimensions = size(Samples,1); 
     
-    W=[zeros(1,Ndimensions),Bias];
-    Wold=[ones(1,Ndimensions),Bias];
-    S = [S;-ones(1,nSamples)];
-    tmax=200000;
+    W=zeros(1,NDimensions);
+    Wold=ones(1,NDimensions);
     t=0;
     
     
@@ -19,30 +16,21 @@ function [W,K] = MinOver(S,Labels)
         minE=0;
         minSample=1;
 
-        for step=1:nSamples
+        for stp=1:NSamples
             
-            E = W*S(:,step)*Labels(step);
+            E = W*Samples(:,stp)*Labels(stp);
             if E<minE 
                 minE = E;
-                minSample = step;
+                minSample = stp;
             end
             
         end
         
         %Hebbian update
-        W = W + 1/Ndimensions * (S(:,minSample)'*Labels(minSample));
+        W = W + 1/NDimensions * (Samples(:,minSample)'*Labels(minSample));
         
         t=t+1;
     end
-
-
-    %Calculate Stability
-    K=Stability(W,S(:,1),Labels(1));
-    for step=2:nSamples            
-        Kt = Stability(W,S(:,step),Labels(step));
-        if Kt<K 
-            K = Kt;
-        end            
-    end
+    
 end
 

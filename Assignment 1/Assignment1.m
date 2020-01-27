@@ -7,43 +7,43 @@ Alpha = 0.75:0.1:3.5;
 Pls = zeros(1,size(Alpha,2));
 Qls = zeros(1,size(Alpha,2));
 
-Ndimensions=20;             %Number of dimensions
+NDimensions=20;             %Number of dimensions
 Nmax=100;                   %Number max of iteration to learnd
 nD=300;                      %Number of experiment to get the mean
-P=round(Alpha*Ndimensions);  %Number of samples based on Alfa
+P=round(Alpha*NDimensions);  %Number of samples based on Alfa
 C=0.5;                      %Constant C>0
 
 %Each diferent Alfa
 for s_alfa = 1:size(Alpha,2)
     
-    p = P(s_alfa);
+    NSamples = P(s_alfa);
     
     %Each diferent nD set of D
     for s_nd=1:nD
         %Initialization
         Bias = 0;
 
-        Weights = [zeros(1,Ndimensions),Bias];
-        Input = [normrnd(0,1,Ndimensions,p);-ones(1,p)];
-        Output = (randi([0 1],p,1)*-2)+1;
+        Weights = [zeros(1,NDimensions),Bias];
+        S = [normrnd(0,1,NDimensions,NSamples);-ones(1,NSamples)];
+        Labels = (randi([0 1],NSamples,1)*-2)+1;
 
         %Loop learning process
         for iteration = 1:Nmax
             found = 0;
 
             %Loop each samples
-            for step = 1:p
+            for step = 1:NSamples
 
-                out = Weights*Input(:,step)*Output(step);
+                out = Weights*S(:,step)*Labels(step);
 
                 if out <= C
-                    Weights = Weights + (Input(:,step)'*Output(step))/Ndimensions;
+                    Weights = Weights + (S(:,step)'*Labels(step))/NDimensions;
                 else
                     found = found +1;
                 end          
             end
 
-            if found == p
+            if found == NSamples
                 Qls(s_alfa) = Qls(s_alfa) + 1;
                 break
             end
@@ -54,13 +54,13 @@ for s_alfa = 1:size(Alpha,2)
     
     %Calculate Pls (Theorical)
     Cpn=0;
-    if p<=Ndimensions
+    if NSamples<=NDimensions
         Pls(s_alfa) = 1;
     else
-        for j=0:(Ndimensions-1)
-            Cpn = Cpn +  factorial(p-1)/(factorial(j)*factorial(p-1-j));
+        for j=0:(NDimensions-1)
+            Cpn = Cpn +  factorial(NSamples-1)/(factorial(j)*factorial(NSamples-1-j));
         end
-        Pls(s_alfa) = 2^(1-p)*Cpn;
+        Pls(s_alfa) = 2^(1-NSamples)*Cpn;
     end    
     
 end
