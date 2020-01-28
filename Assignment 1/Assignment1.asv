@@ -67,5 +67,5 @@ hold on
 title('Histogram of X')
 histogram(X,NSamples)
 xlabel('Sample') 
-ylabel('X') 
+ylabel('Probabilities') 
 

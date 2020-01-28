@@ -1,38 +1,38 @@
-function [W,t] = Adatron(Samples,Labels,Tmax)
+function [W,t,X] = Adatron(Samples,Labels,Tmax)
 %   Adatron algorithm
 
-    NSamples = size(Samples,2);
-    NDimensions = size(Samples,1); 
+    NSamples = size(Samples,1);
+    NDimensions = size(Samples,2); 
     
     W=zeros(1,NDimensions);
     Wold=ones(1,NDimensions);
-    X=zeros(NDimensions,NSamples);
+    X=zeros(1,NSamples);
     t=0;
     step = 1;
-    
-    %Parametres
-    eta=0.1;
+    eta=1;
 
-    while (~isequal(W,Wold)) && (t<Tmax)
-        Wold=W;       
+    while t<Tmax
 
-        E = W*Samples(:,step)*Labels(step);
+        wt=0;
+        for ss = 1:NSamples
+            wt=wt + X(ss)*Samples(ss,:)*Labels(ss);
+        end
+
+        W = wt/NDimensions;
+
+        E = W*(Samples(step,:)*Labels(step))';
 
         %Update the embedding strenght
-        X(:,step) = X(:,step) + eta * (1 - E);           
-        X = max(X,0);     
+        X(step) = X(step) + eta * (1 - E);           
+        X = max(X,0); 
+        
+
 
         %Next Sample
         step = step +1;
         if step > NSamples
             step=1;
         end
-        
-        %Calculate W from embedding strenght
-        for s = 1:NSamples
-            W = W + X(:,s)' .* Samples(:,s)'*Labels(s); 
-        end
-        W = W/NDimensions; 
         
         t=t+1;
     end

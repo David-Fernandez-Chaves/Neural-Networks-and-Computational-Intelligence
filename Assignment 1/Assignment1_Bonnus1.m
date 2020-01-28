@@ -26,7 +26,7 @@ for s_N = 1:size(N,2)
         for s_nd=1:nD
 
             %Initialization a new DataSet
-            Samples = normrnd(0,1,NDimensions,NSamples);
+            Samples = normrnd(0,1,NSamples,NDimensions);
             Labels = (randi([0 1],NSamples,1)*-2)+1;
 
             %Perceptron

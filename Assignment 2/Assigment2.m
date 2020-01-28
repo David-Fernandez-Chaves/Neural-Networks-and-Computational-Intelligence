@@ -5,7 +5,7 @@
 %General initialization
 Alpha = 0.25:0.1:2;
 NDimensions=20;             %Number of dimensions
-nD=5;                      %Number of experiment to get the mean
+nD=10;                      %Number of experiment to get the mean
 P=round(Alpha*NDimensions);  %Number of samples based on Alfa
 
 %Measures
@@ -29,13 +29,13 @@ for s_alfa = 1:size(Alpha,2)
         
         %MinOver
         tic
-        [W_minOver] = MinOver(Samples,Labels,1000);
+        [W_minOver] = MinOver(Samples,Labels,30*NSamples);
         T_MinOver(s_alfa) = T_MinOver(s_alfa) + toc;
         Kw_MinOver(s_alfa) = Kw_MinOver(s_alfa) + Stability(W_minOver,Samples,Labels);
         
         %Adatron
         tic
-        [W_Adatron] = Adatron(Samples,Labels,1000);
+        [W_Adatron,t,X] = Adatron(Samples,Labels,100*NSamples);
         T_Adatron(s_alfa) = T_Adatron(s_alfa) + toc;
         Kw_Adatron(s_alfa) = Kw_Adatron(s_alfa) + Stability(W_Adatron,Samples,Labels);
         

@@ -8,7 +8,7 @@ function [Samples,Labels,W] = GetRandomDataSet(NDimensions,NSamples)
 
 
         W = zeros(1,NDimensions);
-        Samples = normrnd(0,1,NDimensions,NSamples);
+        Samples = normrnd(0,1,NSamples,NDimensions);
         Labels = (randi([0 1],NSamples,1)*-2)+1;
 
 
@@ -16,12 +16,12 @@ function [Samples,Labels,W] = GetRandomDataSet(NDimensions,NSamples)
                 found = 0;
 
                 %Loop each samples
-                for stp = 1:NSamples
+                for step = 1:NSamples
 
-                    out = W*Samples(:,stp)*Labels(stp);
+                    E = W*(Samples(step,:)*Labels(step))';
 
-                    if out <= C
-                        W = W + (Samples(:,stp)'*Labels(stp))/NDimensions;
+                    if E < C
+                        W = W + (Samples(step,:)*Labels(step))/NDimensions;
                     else
                         found = found +1;
                     end          
@@ -32,22 +32,9 @@ function [Samples,Labels,W] = GetRandomDataSet(NDimensions,NSamples)
                 end
         end
         
-        %Force the initial condition
-        W = (W*sqrt(NDimensions))/sqrt(norm(W)^2);
-        
+        %Force the initial condition norm(W)^2=NDimensions
+        W = (W*sqrt(NDimensions))/norm(W);
 
-        found = 0;
-
-        %Loop each samples to check 
-        for stp = 1:NSamples
-
-            out = W*Samples(:,stp)*Labels(stp);
-
-            if out > 0
-                found = found +1;
-            end          
-        end
-    
     end    
     
 end
