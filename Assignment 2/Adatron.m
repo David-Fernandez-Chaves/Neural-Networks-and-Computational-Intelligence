@@ -1,4 +1,4 @@
-function [W,t] = Adatron(Samples,Labels,tmax)
+function [W,t] = Adatron(Samples,Labels,Tmax)
 %   Adatron algorithm
 
     NSamples = size(Samples,2);
@@ -13,7 +13,7 @@ function [W,t] = Adatron(Samples,Labels,tmax)
     %Parametres
     eta=0.1;
 
-    while (~isequal(W,Wold)) && (t<tmax)
+    while (~isequal(W,Wold)) && (t<Tmax)
         Wold=W;       
 
         E = W*Samples(:,step)*Labels(step);

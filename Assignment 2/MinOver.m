@@ -1,4 +1,4 @@
-function [W,t] = MinOver(Samples,Labels,tmax)
+function [W,t] = MinOver(Samples,Labels,Tmax)
 %   MinOver algorithm
 
     NSamples = size(Samples,2);
@@ -9,7 +9,7 @@ function [W,t] = MinOver(Samples,Labels,tmax)
     t=0;
     
     
-    while (~isequal(W,Wold)) && (t<tmax)
+    while (~isequal(W,Wold)) && (t<Tmax)
         Wold=W;
         
         %Get the min Stability
