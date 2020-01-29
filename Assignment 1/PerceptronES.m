@@ -21,7 +21,7 @@ function [W,Qls,X] = PerceptronES(Samples,Labels,Tmax,C)
             
             W = wt/NDimensions;
             
-            E = W*(Samples(step,:)*Labels(step))';
+            E = dot(W,Samples(step,:))*Labels(step);
 
             %Update the embedding strenght
             if E < C

@@ -13,7 +13,7 @@ function [W,Qls] = Perceptron(Samples,Labels,Tmax,C)
         %Loop each samples
         for step = 1:NSamples
 
-            E = W*(Samples(step,:)*Labels(step))';
+            E = dot(W,Samples(step,:))*Labels(step);
 
             if E <= C
                 W = W + (Samples(step,:)*Labels(step))/NDimensions;

@@ -1,12 +1,12 @@
 function [K] = Stability(W,Samples,Labels)
-%Stabilitie 
-%   Calculate the stability
-
+%Stability
+%   Calculate the stability from W
+    Samples = [Samples,-1*ones(length(Labels),1)];
     NSamples = size(Samples,1);
-    K = (W*(Samples(1,:)*Labels(1))')/norm(W);
+    K = (dot(W,Samples(1,:))*Labels(1))/norm(W);
     
     for step=2:NSamples            
-        Kt = (W*(Samples(step,:)*Labels(step))')/norm(W);
+        Kt = (dot(W,Samples(step,:))*Labels(step))/norm(W);
         if Kt<K 
             K = Kt;
         end            

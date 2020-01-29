@@ -1,19 +1,17 @@
-function [W,t,X] = Adatron(Samples,Labels,Tmax)
+function [W,t,X] = Adatron(Samples,Labels,Tmax,eta)
 %   Adatron algorithm
 
     NSamples = size(Samples,1);
     NDimensions = size(Samples,2); 
     
-    W=zeros(1,NDimensions);
+    W=zeros(1,NDimensions+1);
     Wold=ones(1,NDimensions);
     X=zeros(1,NSamples);
     t=0;
     step = 1;
-    eta=0.1;
 
-    while (~isequal(W,Wold)) && (t<Tmax)
-        Wold=W;
-        
+    while t<Tmax
+
         wt=0;
         for ss = 1:NSamples
             wt=wt + X(ss)*Samples(ss,:)*Labels(ss);
@@ -27,10 +25,7 @@ function [W,t,X] = Adatron(Samples,Labels,Tmax)
         X(step) = X(step) + eta * (1 - E);           
         X = max(X,0); 
         
-        if isequal(W,Wold)
-            break;
-        else
-            Wold=W;
+
 
         %Next Sample
         step = step +1;

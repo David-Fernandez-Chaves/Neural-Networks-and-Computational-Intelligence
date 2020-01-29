@@ -3,9 +3,9 @@
 %Neural Networks and Computational Intelligence
 
 %General initialization
-Alpha = 0.25:0.1:2;
+Alpha = 0.25:0.1:2.7;
 NDimensions=20;             %Number of dimensions
-nD=5;                      %Number of experiment to get the mean
+nD=20;                      %Number of experiment to get the mean
 P=round(Alpha*NDimensions);  %Number of samples based on Alfa
 
 %Measures
@@ -24,24 +24,24 @@ for s_alfa = 1:size(Alpha,2)
     %Each diferent nD set of D
     for s_nd=1:nD
         %Get Random dataset and teacher perceptron W*
-        [Samples,Labels,W] = GetRandomDataSet(NDimensions,NSamples);        
+        [Samples,Labels,W] = GetRandomDataSet(NDimensions,NSamples,500);        
         Kw(s_alfa) = Kw(s_alfa) + Stability(W,Samples,Labels);
         
         %MinOver
         tic
-        [W_minOver] = MinOver(Samples,Labels,30*NSamples);
+        [W_minOver,t1] = MinOver(Samples,Labels,50*NSamples);
         T_MinOver(s_alfa) = T_MinOver(s_alfa) + toc;
         Kw_MinOver(s_alfa) = Kw_MinOver(s_alfa) + Stability(W_minOver,Samples,Labels);
         
         %Adatron
         tic
-        [W_Adatron,t,X] = Adatron(Samples,Labels,100*NSamples);
+        [W_Adatron,t2,X] = Adatron(Samples,Labels,50*NSamples,1);
         T_Adatron(s_alfa) = T_Adatron(s_alfa) + toc;
         Kw_Adatron(s_alfa) = Kw_Adatron(s_alfa) + Stability(W_Adatron,Samples,Labels);
         
         %Calculate the Generalization Error
-        Eg_MinOver(s_alfa) = Eg_MinOver(s_alfa) + 1/pi * acos((W_minOver*W')/(norm(W_minOver)*norm(W)));
-        Eg_Adatron(s_alfa) = Eg_Adatron(s_alfa) + 1/pi * acos((W_Adatron*W')/(norm(W_Adatron)*norm(W)));
+        Eg_MinOver(s_alfa) = Eg_MinOver(s_alfa) + acos(dot(W_minOver,W)/(norm(W_minOver)*norm(W)))/pi;
+        Eg_Adatron(s_alfa) = Eg_Adatron(s_alfa) + acos(dot(W_Adatron,W)/(norm(W_Adatron)*norm(W)))/pi;
     end
     
     Kw(s_alfa) = Kw(s_alfa)/nD;
