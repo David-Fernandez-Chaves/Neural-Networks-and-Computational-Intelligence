@@ -4,7 +4,7 @@
 
 %General initialization
 Alpha = 0.75:0.1:3;
-N = 2:1:40;
+N = 2:1:40;                  %Number of dimensions
 
 nD=100;                      %Number of experiment to get the mean
 
@@ -14,7 +14,7 @@ Qls = zeros(size(N,2),size(Alpha,2));
 
 for s_N = 1:size(N,2)
 
-    NDimensions=N(s_N);              %Number of dimensions
+    NDimensions=N(s_N);              
     P=round(Alpha*NDimensions);      %Number of samples based on Alfa
 
     %Each diferent Alfa

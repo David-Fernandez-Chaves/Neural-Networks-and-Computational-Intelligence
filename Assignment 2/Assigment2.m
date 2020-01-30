@@ -7,7 +7,7 @@ Alpha = 0.25:0.1:2.5;
 NDimensions=20;             %Number of dimensions
 nD=20;                      %Number of experiment to get the mean
 P=round(Alpha*NDimensions); %Number of samples based on Alfa
-lambda = 0.5                %Noisy setting
+lambda = 0;                 %Noisy setting
 
 %Measures
 Eg_MinOver = zeros(1,size(Alpha,2));

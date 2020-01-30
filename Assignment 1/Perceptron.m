@@ -4,6 +4,7 @@ function [W,Qls,LS] = Perceptron(Samples,Labels,Tmax,C)
     NSamples = size(Samples,1);
     NDimensions = size(Samples,2);                 
     W = zeros(1,NDimensions);  
+    %W = zeros(1,NDimensions+1); 
     Qls=0;
     LS=0;
     
