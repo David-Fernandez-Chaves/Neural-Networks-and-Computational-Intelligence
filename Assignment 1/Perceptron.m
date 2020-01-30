@@ -1,10 +1,13 @@
-function [W,Qls] = Perceptron(Samples,Labels,Tmax,C)
+function [W,Qls,LS] = Perceptron(Samples,Labels,Tmax,C)
 %   MinOver algorithm
 
     NSamples = size(Samples,1);
     NDimensions = size(Samples,2);                 
     W = zeros(1,NDimensions);  
     Qls=0;
+    LS=0;
+    
+    %Samples = [Samples,-1*ones(length(Labels),1)];
     
     %Loop learning process
     for iteration = 1:Tmax
@@ -24,6 +27,7 @@ function [W,Qls] = Perceptron(Samples,Labels,Tmax,C)
 
         if found == NSamples
             Qls = Qls + 1;
+            LS=1;
             break
         end
     end 

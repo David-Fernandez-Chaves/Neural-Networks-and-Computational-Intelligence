@@ -3,10 +3,11 @@
 %Neural Networks and Computational Intelligence
 
 %General initialization
-Alpha = 0.25:0.1:2.7;
+Alpha = 0.25:0.1:2.5;
 NDimensions=20;             %Number of dimensions
 nD=20;                      %Number of experiment to get the mean
-P=round(Alpha*NDimensions);  %Number of samples based on Alfa
+P=round(Alpha*NDimensions); %Number of samples based on Alfa
+lambda = 0.5                %Noisy setting
 
 %Measures
 Eg_MinOver = zeros(1,size(Alpha,2));
@@ -26,6 +27,14 @@ for s_alfa = 1:size(Alpha,2)
         %Get Random dataset and teacher perceptron W*
         [Samples,Labels,W] = GetRandomDataSet(NDimensions,NSamples,500);        
         Kw(s_alfa) = Kw(s_alfa) + Stability(W,Samples,Labels);
+        
+        %Noisy
+        Samples2 = [Samples,-1*ones(length(Labels),1)];
+        for s = 1:NSamples
+            if lambda > rand
+                Labels(s) = sign(dot(W,Samples2(s,:)));
+            end
+        end
         
         %MinOver
         tic

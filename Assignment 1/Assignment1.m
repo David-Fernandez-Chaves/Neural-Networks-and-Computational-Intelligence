@@ -3,12 +3,13 @@
 %Neural Networks and Computational Intelligence
 
 %General initialization
-Alpha = 0.75:0.1:3.5;
+Alpha = 0.75:0.1:1.5;
 Pls = zeros(1,size(Alpha,2));
 Qls = zeros(1,size(Alpha,2));
+LS = zeros(1,size(Alpha,2));
 
 NDimensions=20;              %Number of dimensions
-nD=50;                      %Number of experiment to get the mean
+nD=2;                        %Number of experiment to get the mean
 P=round(Alpha*NDimensions);  %Number of samples based on Alfa
 
 
@@ -25,11 +26,13 @@ for s_alfa = 1:size(Alpha,2)
         Labels = (randi([0 1],NSamples,1)*-2)+1;
         
         %Perceptron
-        %[W,Q]=Perceptron(Samples,Labels,5*NSamples,0.1);
-        %Qls(s_alfa) = Qls(s_alfa) + Q;
+        %[W,Q,ls]=Perceptron(Samples,Labels,10*NSamples,0.1);
+
         
         %Perceptron Embedding Strenghts
-        [W,Q,X]=PerceptronES(Samples,Labels,5*NSamples,0.1);
+        [W,Q,X,ls]=PerceptronES(Samples,Labels,10*NSamples,0.1);
+        
+        LS(s_alfa) = LS(s_alfa) + ls;
         Qls(s_alfa) = Qls(s_alfa) + Q;
         
         
@@ -57,9 +60,22 @@ hold on
 title('Comparison between Pls and Qls')
 plot(Alpha,Pls)
 plot(Alpha,Qls)
+%plot(Alpha,QLS01)
+%plot(Alpha,QLS001)
+%legend('Pls','Qls {C=1}','Qls {C=0.1}','Qls {C=0.01}')
 legend('Pls','Qls')
 xlabel('Alpha values') 
 ylabel('Probabilities') 
+
+%Plot % successful training processes
+figure
+hold on
+title('% successful training processes')
+plot(P,LS/nD)
+%plot(P,LSOld/nD)
+%legend('Without clamped','Clamped')
+xlabel('Number of samples') 
+ylabel('%')
 
 %Plot histogram of X
 figure

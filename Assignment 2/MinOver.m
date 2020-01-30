@@ -14,10 +14,10 @@ function [W,t] = MinOver(Samples,Labels,Tmax)
         Wold=W;
         
         %Get the min Stability
-        minE=0;
+        minE= dot(W,Samples(1,:))*Labels(1);
         minSample=1;
 
-        for step=1:NSamples
+        for step=2:NSamples
             E = dot(W,Samples(step,:))*Labels(step);
             if E<minE 
                 minE = E;
