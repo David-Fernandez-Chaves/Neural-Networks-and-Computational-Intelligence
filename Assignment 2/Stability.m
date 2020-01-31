@@ -1,7 +1,6 @@
 function [K] = Stability(W,Samples,Labels)
 %Stability
 %   Calculate the stability from W
-    Samples = [Samples,-1*ones(length(Labels),1)];
     NSamples = size(Samples,1);
     K = (dot(W,Samples(1,:))*Labels(1))/norm(W);
     

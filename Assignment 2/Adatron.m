@@ -3,10 +3,8 @@ function [W,t,X] = Adatron(Samples,Labels,Tmax,eta)
 
     NSamples = size(Labels,1);
     NDimensions = size(Samples,2); 
-    
-    Samples = [Samples,-1*ones(length(Labels),1)];
-    
-    W=zeros(1,NDimensions+1);
+
+    W=zeros(1,NDimensions);
     X=zeros(1,NSamples);
     t=0;
     step = 1;

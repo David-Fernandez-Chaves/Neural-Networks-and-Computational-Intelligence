@@ -58,5 +58,7 @@ Then open the file Assigment 2/Assigment2.m
 
 Run the file.
 
+To show and hide the results of the perceptron generalization error (for the Bonus of dataset with noise), uncomment and comment respectively the lines: 75, 78 and 79
+
 All BONUSES are resolved with the same instructions by changing these parameters.
 

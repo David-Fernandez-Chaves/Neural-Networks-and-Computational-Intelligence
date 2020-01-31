@@ -10,7 +10,6 @@ P=round(Alpha*NDimensions); %Number of samples based on Alfa
 lambda = 0;                 %Noisy setting
 
 %Measures
-Eg_Perceptron = zeros(1,size(Alpha,2));
 Eg_MinOver = zeros(1,size(Alpha,2));
 Eg_Adatron = zeros(1,size(Alpha,2));
 T_MinOver = zeros(1,size(Alpha,2));
@@ -30,15 +29,16 @@ for s_alfa = 1:size(Alpha,2)
         Kw(s_alfa) = Kw(s_alfa) + Stability(W,Samples,Labels);
         
         %Noisy
+        Samples2 = [Samples,-1*ones(length(Labels),1)];
         for s = 1:NSamples
             if lambda > rand
-                Labels(s) = sign(dot(W,Samples(s,:)));
+                Labels(s) = sign(dot(W,Samples2(s,:)));
             end
         end
 
         %Perceptron
-        [W_perceptron,Q]=Perceptron(Samples,Labels,50*NSamples,0.1);
 
+        
         %MinOver
         tic
         [W_minOver,t1] = MinOver(Samples,Labels,50*NSamples,W);
@@ -52,7 +52,6 @@ for s_alfa = 1:size(Alpha,2)
         Kw_Adatron(s_alfa) = Kw_Adatron(s_alfa) + Stability(W_Adatron,Samples,Labels);
         
         %Calculate the Generalization Error
-        Eg_Perceptron(s_alfa) = Eg_Perceptron(s_alfa) + acos(dot(W_perceptron,W)/(norm(W_perceptron)*norm(W)))/pi;
         Eg_MinOver(s_alfa) = Eg_MinOver(s_alfa) + acos(dot(W_minOver,W)/(norm(W_minOver)*norm(W)))/pi;
         Eg_Adatron(s_alfa) = Eg_Adatron(s_alfa) + acos(dot(W_Adatron,W)/(norm(W_Adatron)*norm(W)))/pi;
     end
@@ -62,7 +61,6 @@ for s_alfa = 1:size(Alpha,2)
     Kw_Adatron(s_alfa) = Kw_Adatron(s_alfa)/nD;
     T_MinOver(s_alfa) = T_MinOver(s_alfa)/nD;
     T_Adatron(s_alfa) = T_Adatron(s_alfa)/nD;
-    Eg_Perceptron(s_alfa) = Eg_Perceptron(s_alfa)/nD; 
     Eg_MinOver(s_alfa) = Eg_MinOver(s_alfa)/nD; 
     Eg_Adatron(s_alfa) = Eg_Adatron(s_alfa)/nD; 
     Alpha(s_alfa)
@@ -72,10 +70,8 @@ end
 figure
 hold on
 title('Comparison Generalization Error between MinOver and Adatron')
-%plot(Alpha,Eg_Perceptron)
 plot(Alpha,Eg_MinOver)
 plot(Alpha,Eg_Adatron)
-%legend('Perceptron','MinOver','Adatron')
 legend('MinOver','Adatron')
 xlabel('Alpha values') 
 ylabel('Generalization Error') 
