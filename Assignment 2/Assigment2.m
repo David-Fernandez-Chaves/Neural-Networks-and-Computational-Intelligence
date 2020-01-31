@@ -38,7 +38,7 @@ for s_alfa = 1:size(Alpha,2)
         
         %MinOver
         tic
-        [W_minOver,t1] = MinOver(Samples,Labels,50*NSamples);
+        [W_minOver,t1] = MinOver(Samples,Labels,50*NSamples,W);
         T_MinOver(s_alfa) = T_MinOver(s_alfa) + toc;
         Kw_MinOver(s_alfa) = Kw_MinOver(s_alfa) + Stability(W_minOver,Samples,Labels);
         
@@ -71,7 +71,7 @@ plot(Alpha,Eg_MinOver)
 plot(Alpha,Eg_Adatron)
 legend('MinOver','Adatron')
 xlabel('Alpha values') 
-ylabel('Averange Generalization Error') 
+ylabel('Generalization Error') 
 
 
 %Stabilities Figure
@@ -83,7 +83,7 @@ plot(Alpha,Kw_MinOver)
 plot(Alpha,Kw_Adatron)
 legend('Perceptron','MinOver','Adatron')
 xlabel('Alpha values') 
-ylabel('Averange K(w)') 
+ylabel('K(w)') 
 
 %Time Figure
 figure
@@ -93,4 +93,4 @@ plot(Alpha,T_MinOver)
 plot(Alpha,T_Adatron)
 legend('MinOver','Adatron')
 xlabel('Alpha values') 
-ylabel('Averange Time (s)') 
+ylabel('Time (s)') 

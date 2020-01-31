@@ -1,4 +1,4 @@
-function [W,t] = MinOver(Samples,Labels,Tmax,WW)
+function [W,t] = MinOver(Samples,Labels,Tmax,ww)
 %   MinOver algorithm
 
     NSamples = size(Labels,1);
@@ -10,7 +10,6 @@ function [W,t] = MinOver(Samples,Labels,Tmax,WW)
     Wold=ones(1,NDimensions+1);
     t=0;
     angle=0;
-    NormWW = norm(WW);
     
     while (~isequal(W,Wold)) && (t<Tmax)
         Wold=W;
@@ -32,13 +31,7 @@ function [W,t] = MinOver(Samples,Labels,Tmax,WW)
         W = W + (Samples(minSample,:)*Labels(minSample))/NDimensions;
         
         %Calculate the angle
-        a = acos(dot(W,WW)/(NormWW*norm(W)))/pi;
-        
-        if isequal(a,angle)            
-            break;
-        else
-            angle=a;
-        end
+        a = acos(()/(norm(ww)))/pi;
         
         t=t+1;
     end

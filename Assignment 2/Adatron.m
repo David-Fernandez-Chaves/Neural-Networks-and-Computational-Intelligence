@@ -27,7 +27,6 @@ function [W,t,X] = Adatron(Samples,Labels,Tmax,eta)
         X = max(X,0); 
         
 
-
         %Next Sample
         step = step +1;
         if step > NSamples
