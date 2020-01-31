@@ -1,6 +1,5 @@
-function [W,t] = MinOver(Samples,Labels,Tmax)
 %   MinOver algorithm
-
+function [W,t] = MinOver(Samples,Labels,Tmax)
     NSamples = size(Labels,1);
     NDimensions = size(Samples,2); 
     
@@ -10,10 +9,10 @@ function [W,t] = MinOver(Samples,Labels,Tmax)
     Wold=ones(1,NDimensions+1);
     t=0;
     
-    while (~isequal(W,Wold)) && (t<Tmax)
+    while (~isequal(W,Wold)) && (t<Tmax) % Stoppage criterion used
         Wold=W;
         
-        %Get the min Stability
+        % Find the example with mininum stability
         minE= dot(W,Samples(1,:))*Labels(1);
         minSample=1;
 
@@ -26,7 +25,7 @@ function [W,t] = MinOver(Samples,Labels,Tmax)
             
         end
         
-        %Hebbian update
+        % Hebbian update for least stable example
         W = W + (Samples(minSample,:)*Labels(minSample))/NDimensions;
         
         t=t+1;
